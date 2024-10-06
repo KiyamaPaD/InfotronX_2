@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <style>
+            .table7{
+                position: relative;
+                top:-950px;
+                text-align: left;
+                color: #53f2e6;
+                text-decoration: none;
+                font-family: "Arial";
+                -webkit-text-stroke-color: black;
+                -webkit-text-stroke-width: 0.25px;
+            }
+            #toggleTextBtn {
+    position: absolute;
+    top: 20px;
+    right: 80px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color:#53f2e6;
+    cursor: pointer;
+    background-color: transparent; 
+    border: solid;
+}
+            
+        </style>
+        <div id="container"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+        <script src="saturn.js"></script>
+    </head>
+    <body bgcolor="black">
+        <table>
+            <tr>
+                <td class="table7">Name</td>
+                <td class="table7">Saturn</td>
+            </tr>
+            <tr>
+                <td class="table7">Type</td>
+                <td class="table7">Gas Giant</td>
+            </tr>
+            <tr>
+                <td class="table7">Age</td>
+                <td class="table7">4.5 billion years</td>
+            </tr>
+            <tr>
+                <td class="table7">Diameter</td>
+                <td class="table7">116,464 kilometers</td>
+            </tr>
+            <tr>
+                <td class="table7">Mass</td>
+                <td class="table7">5.68 × 10<sup>26</sup> kg</td>
+            </tr>
+            <tr>
+                <td class="table7">Distance to Earth</td>
+                <td class="table7">1.2 billion kilometers</td>
+            </tr>
+            <tr>
+                <td class="table7">Gravity</td>
+                <td class="table7">10.44 m/s²</td>
+            </tr>
+            <tr>
+                <td class="table7">Rotation Period</td>
+                <td class="table7">10.7 hours</td>
+            </tr>
+            <tr>
+                <td class="table7">Number of Moons</td>
+                <td class="table7">83</td>
+            </tr>
+            <tr>
+                <td class="table7">Atmospheric Pressure</td>
+                <td class="table7">1 bar at the cloud tops, increasing with depth</td>
+            </tr>
+        </table>
+        <a href="Nasa1.html"><button id="toggleTextBtn"><h3>Hide Info</h3></button></a>
+
+        <script>
+            // Toggle the iframe visibility
+            const toggleButton = document.getElementById('toggleIframeBtn');
+            const iframeContainer = document.getElementById('iframeContainer');
+
+            toggleButton.addEventListener('click', () => {
+                if (iframeContainer.style.display === "none") {
+                    iframeContainer.style.display = "block"; // Show the iframe
+                    toggleButton.textContent = "Hide Info"; // Change button text
+                } else {
+                    iframeContainer.style.display = "none"; // Hide the iframe
+                    toggleButton.textContent = "Show Info"; // Change button text
+                 }
+            });
+        </script>
+    </body>
+</html>

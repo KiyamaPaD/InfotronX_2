@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orrery Web App: Explore Near-Earth Objects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background: url('space-background.jpg') no-repeat center center/cover;
+            padding: 60px;
+            text-align: center;
+            width: 100%;
+        }
+        h1 {
+            font-size: 3.5em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .cta-button {
+            background-color: #ffcc00;
+            color: #0d0d0d;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em; 
+            transition: background-color 0.3s;
+            margin-left: 20px; 
+        }
+        .more-infos {    
+            display: none;
+        }
+        .more-info {    
+            display: none;
+        }
+        .more-info2 {    
+            display: none;
+        }
+        .more-info3 {    
+            display: none;
+        }
+        .more-info4 {    
+            display: none;
+        }
+        .more-info5 {    
+            display: none;
+        }
+        .more-info6 {    
+            display: none;
+        }
+        .more-info7 {    
+            display: none;
+        }
+        .more-info8 {    
+            display: none;
+        }
+        .cta-button:hover {
+            background-color: #ffd700;
+        }
+        section {
+            padding: 40px;
+            margin: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            width: 80%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+            width: 100%;
+        }
+        #orrery-container {
+            width: 100%;
+            height: 500px;
+            background-color: #111;
+            position: relative;
+            overflow: hidden;
+        }
+        canvas {
+            background-color: #111;
+            border: 1px solid white;
+            margin-top: 10px;
+        }
+        #neo-info {
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            width: 100%; 
+            text-align: left; 
+        }
+    </style>
+     <script>//more infos
+        function toggleInfos() {
+            const additionalInfo = document.querySelector('.more-infos');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info
+        function toggleInfo() {
+            const additionalInfo = document.querySelector('.more-info');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info2
+        function toggleInfo2() {
+            const additionalInfo = document.querySelector('.more-info2');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info3
+        function toggleInfo3() {
+            const additionalInfo = document.querySelector('.more-info3');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info4
+        function toggleInfo4() {
+            const additionalInfo = document.querySelector('.more-info4');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info5
+        function toggleInfo5() {
+            const additionalInfo = document.querySelector('.more-info5');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info6
+        function toggleInfo6() {
+            const additionalInfo = document.querySelector('.more-info6');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info7
+        function toggleInfo7() {
+            const additionalInfo = document.querySelector('.more-info7');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>//more info8
+        function toggleInfo8() {
+            const additionalInfo = document.querySelector('.more-info8');
+            additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+
+<header>
+    <h1>SOLAR SYSTEM</h1>
+    <p>Explore and Visualize Near Earth Objects</p>
+    <a href="#app" class="cta-button">SEE THE SOLAR SYSTEM</a>
+</header>
+
+<section id="about">
+    <h2>About Us</h2>
+    <p> We are InfotronX, a robotics team from Colegiul Tehnic Infoel in Bistrița-Năsăud, Romania. We participate in the NASA Space Apps Challenge to connect with others who share our interest in technology and innovation.</p>
+</section>
+
+<section id="app">
+    <h2>
+        Interactive Orrery
+        <button id="toggleButton" class="cta-button">Start Animation</button>
+    </h2>
+    <div id="orrery-container">
+        <canvas id="canvas" width="800" height="500"></canvas>
+        <script>
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const sun = { x: canvas.width / 2, y: canvas.height / 2, radius: 30, color: 'yellow',info:'The Sun is a star.' };
+            const planets = [
+             {  name: 'Mercury', 
+                distance: 70, 
+                size: 6, 
+                color: 'gray', 
+                angle: 0, 
+                speed: 0.05, 
+                info: 'Mercury is the closest planet to the Sun and has a very thin atmosphere.' 
+            },
+                { name: 'Venus', 
+                distance: 90, 
+                size: 12, 
+                color: 'orange', 
+                angle: 0, 
+                speed: 0.04, 
+                info: 'Venus is similar in structure to Earth but has a thick, toxic atmosphere.' 
+            },
+            {   name: 'Earth', 
+                distance: 110, 
+                size: 10, 
+                color: 'blue', 
+                angle: 0, 
+                speed: 0.03, 
+                info: 'Earth is the only planet known to support life and has vast oceans.' 
+            },
+            {   name: 'Mars', 
+                distance: 130, 
+                size: 8, 
+                color: 'red', 
+                angle: 0, 
+                peed: 0.02, 
+                info: 'Mars is known as the Red Planet and has the largest volcano in the solar system.' 
+            },
+                { name: 'Jupiter', 
+                distance: 170, 
+                size: 20, 
+                color: 'orange', 
+                angle: 0, 
+                speed: 0.01, 
+                info: 'Jupiter is the largest planet and has a Great Red Spot, a giant storm.' 
+            },
+            {   name: 'Saturn', 
+                distance: 210, 
+                size: 16, 
+                color: 'goldenrod', 
+                angle: 0, 
+                speed: 0.008, 
+                info: 'Saturn is famous for its stunning rings made of ice and rock particles.' 
+            },
+            {   name: 'Uranus', 
+                distance: 250, 
+                size: 14, 
+                color: 'lightblue', 
+                angle: 0, 
+                speed: 0.007, 
+                info: 'Uranus rotates on its side and has a faint ring system.' 
+            },
+             {  name: 'Neptune', 
+                distance: 290, 
+                size: 12, 
+                color: 'darkblue', 
+                angle: 0, 
+                speed: 0.006, 
+                info: 'Neptune is known for its strong winds and is the farthest planet from the Sun.' 
+            }
+            ];
+
+            let isAnimating = false;
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); 
+
+                
+                ctx.beginPath();
+                ctx.arc(sun.x, sun.y, sun.radius, 0, Math.PI * 2);
+                ctx.fillStyle = sun.color;
+                ctx.fill();
+                ctx.closePath();
+
+                
+                planets.forEach(planet => {
+                    planet.angle += planet.speed; 
+                    const x = sun.x + planet.distance * Math.cos(planet.angle);
+                    const y = sun.y + planet.distance * Math.sin(planet.angle);
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, planet.size, 0, Math.PI * 2);
+                    ctx.fillStyle = planet.color;
+                    ctx.fill();
+                    ctx.closePath();
+
+                    
+                    canvas.addEventListener('click', (event) => {
+                        const mouseX = event.offsetX;
+                        const mouseY = event.offsetY;
+                        const dist = Math.sqrt((mouseX - x) ** 2 + (mouseY - y) ** 2);
+                        if (dist < planet.size) {
+                            document.getElementById('neo-info').innerText = planet.info;
+                        }
+                    });
+                });
+            }
+
+            function animate() {
+                if (isAnimating) {
+                    draw();
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            document.getElementById('toggleButton').addEventListener('click', function() {
+                isAnimating = !isAnimating; 
+                this.textContent = isAnimating ? 'Stop Animation' : 'Start Animation';
+                if (isAnimating) {
+                    animate();
+                }
+            });
+        </script>
+		<script>//cursor custom+click explozie
+        function changeCursor() {
+            document.body.style.cursor = "url('C:/Users/InfotronX PR/Desktop/cursor ozn/exploziev2.png'), auto"; 
+        }
+        function resetCursor() {
+            document.body.style.cursor = "url('C:/Users/InfotronX PR/Desktop/cursor ozn/v3.png'), auto"; 
+        }       document.addEventListener('mousedown', function(event) {
+            if (event.button === 0) {
+                changeCursor();
+            }
+        });
+        document.addEventListener('mouseup', resetCursor);
+    </script> 
+    </div>
+    <div id="neo-info"></div>
+</section>
+
+<section>
+    <iframe src="https://cute-mermaid-541cbf.netlify.app/" height="1020" width="1080" title="3D Planets">
+    </iframe>
+    
+</section>
+<section id="sun">
+    <h1>Sun Overview</h1>
+
+    <h2>General Information</h2>
+    <ul>
+        <li>Name: Sun/Sol</li>
+        <li>Type: G-type main-sequence star</li>
+        <li>Age: 4.6 billion years</li>
+        <li>Diameter: About 1.39 million kilometers</li>
+        <li>Mass: About 333,000 times the mass of Earth</li>
+        <li>Distance to Earth: 150 million kilometers</li>
+        <li>Gravity: 274 m/s²</li>
+        <li>Rotation Period: 25 days at the equator, 35 days at the poles</li>
+        <li>Luminosity: 3.846 × 10<sup>26</sup> watts</li>
+        <li>Temperature: Surface temperature is 5,500 degrees Celsius</li>
+        <li>Number of Planets: 8</li>
+    </ul>
+    
+    <button class="toggle-buttons" onclick="toggleInfos()">Show/Hide Additional Information</button>
+    
+    <div class="more-infos">
+        <hr>
+    
+        <h2>Structure</h2>
+        <ul>
+            <li>Core: The innermost layer, where nuclear fusion occurs, converting hydrogen into helium and releasing energy.</li>
+            <li>Radiative Zone: Surrounds the core, where energy is transferred outward by radiation.</li>
+            <li>Convective Zone: The outer layer of the Sun's interior, where hot plasma rises, cools, and sinks in a convection current.</li>
+            <li>Photosphere: The visible surface of the Sun, where light is emitted, with a temperature of about 5,500 °C (9,932 °F).</li>
+            <li>Chromosphere: A thin layer above the photosphere, visible during solar eclipses.</li>
+            <li>Corona: The outer atmosphere, extending millions of kilometers into space, characterized by high temperatures (up to 1 million °C or 1.8 million °F) and low density.</li>
+        </ul>
+    
+        <hr>
+    
+        <h2>Solar Activity</h2>
+        <ul>
+            <li>Sunspots: Dark spots on the photosphere caused by magnetic activity, often associated with solar flares and coronal mass ejections.</li>
+            <li>Solar Flares: Sudden bursts of energy that can affect satellite communications and power grids on Earth.</li>
+            <li>Solar Wind: A stream of charged particles released from the Sun's atmosphere, which can create auroras and affect space weather.</li>
+        </ul>
+    
+        <hr>
+    
+        <h2>Importance</h2>
+        <ul>
+            <li>Energy Source: The Sun is the primary source of energy for life on Earth, driving photosynthesis and influencing climate.</li>
+            <li>Gravity: Its immense gravitational pull keeps the planets, including Earth, in orbit.</li>
+        </ul>
+    
+        <hr>
+    
+        <h2>Exploration</h2>
+        <ul>
+            <li>Various space missions, such as NASA's Parker Solar Probe and the Solar and Heliospheric Observatory (SOHO), aim to study the Sun's properties and behavior more closely.</li>
+        </ul>
+    
+        <hr>
+    
+        <h2>10 Curiosities About the Sun</h2>
+        <ol>
+            <li>Nuclear Fusion: The Sun generates energy through nuclear fusion, where hydrogen nuclei combine to form helium, releasing immense amounts of energy.</li>
+            <li>Size and Scale: The Sun accounts for about 99.86% of the total mass of the solar system; you could fit about 1.3 million Earths inside the Sun!</li>
+            <li>Solar Atmosphere: The Sun's atmosphere, especially the corona, is much hotter than its surface.</li>
+            <li>Solar Cycle: The Sun goes through an approximately 11-year solar cycle marked by varying levels of sunspot activity.</li>
+            <li>Light Travel Time: It takes about 8 minutes and 20 seconds for light from the Sun to reach Earth.</li>
+            <li>Impact on Earth's Climate: Solar activity can influence Earth’s climate over long periods.</li>
+            <li>Auroras: Solar wind interacts with Earth's magnetic field, producing stunning auroras.</li>
+            <li>Future of the Sun: In about 5 billion years, the Sun will exhaust its hydrogen fuel and become a red giant.</li>
+            <li>Solar Magnetic Field: The Sun has a complex magnetic field driving solar phenomena.</li>
+            <li>Sun’s Color: The Sun appears yellow from Earth but is technically white when viewed from space.</li>
+        </ol>
+    </div>
+
+</section>
+
+<section id="mercury">
+    
+<h1>Mercury Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Type: Terrestrial planet</li>
+    <li>Age: About 4.6 billion years</li>
+    <li>Diameter: Roughly 4,880 km</li>
+    <li>Mass: 0.055 times that of Earth</li>
+    <li>Distance from Earth: Ranges from 77 million km to 222 million km</li>
+    <li>Gravity: 3.7 m/s²</li>
+    <li>Rotation Period: 59 Earth days</li>
+    <li>Moons: None</li>
+    <li>Atmospheric Pressure: Very low</li>
+</ul>
+
+    <button class="toggle-button" onclick="toggleInfo()">Show/Hide Additional Information</button>
+
+<div class="more-info">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>
+        <li>Core: Large iron core (~75% of radius), partially molten, generating its magnetic field.</li>
+        <li>Mantle: Thin silicate mantle with various minerals, undergoing thermal changes over time.</li>
+        <li>Crust: Thin, rocky outer layer, featuring impact craters and vast plains.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: Heavily cratered, including features like the Caloris Basin; extreme temperature variations.</li>
+        <li>Temperature: Daytime up to 430°C; nighttime down to around -180°C.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate Zones: No distinct zones; extreme temperature swings.</li>
+        <li>Weather: Virtually nonexistent.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Mariner 10: First spacecraft to fly by (1973), providing valuable data.</li>
+        <li>MESSENGER: Orbited from 2011 to 2015, mapping the surface and studying composition.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Magnetic Field: Weak field, unusual for a small planet.</li>
+        <li>Caloris Basin: One of the largest impact craters, offering geological insights.</li>
+        <li>Water Ice: Permanently shadowed craters at poles contain water ice.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Historical Significance: Known since ancient times; detailed observations began in the 17th century by Galileo Galilei in 1610.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Mercury</h2>
+    <ol>
+        <li>Fastest Orbit: Completes an orbit around the Sun in just 88 Earth days.</li>
+        <li>Day Length: A full rotation on its axis takes about 59 Earth days.</li>
+        <li>Eccentric Orbit: Elongated orbit results in distance variations from the Sun.</li>
+        <li>Temperature Extremes: Most extreme temperature swings of any planet.</li>
+        <li>No Moons: One of only two planets without natural satellites.</li>
+        <li>Name Origin: Named after the Roman messenger god.</li>
+        <li>Heavy Metal: Known as the “heavy metal” planet due to high iron content.</li>
+        <li>Shrinking Planet: Gradually shrinking as it cools.</li>
+        <li>Historical Observations: Recorded by ancient civilizations, often associated with gods.</li>
+        <li>Unique Rotation: 3:2 spin-orbit resonance; rotates three times for every two orbits.</li>
+    </ol>
+</div>
+</section>
+
+
+<section id="venus">
+    <h1>Venus Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Name: Venus</li>
+    <li>Type: Terrestrial planet</li>
+    <li>Age: 4.5 billion years</li>
+    <li>Diameter: 12,104 km</li>
+    <li>Mass: 6,051.8 kg</li>
+    <li>Distance from Earth: Closest 38 million km, farthest 261 million km</li>
+    <li>Gravity: 8.87 m/s²</li>
+    <li>Rotation Period: 243 Earth days</li>
+    <li>Moons: None</li>
+    <li>Atmospheric Pressure: About 92 times that of Earth's</li>
+</ul>
+
+<button class="toggle-button2" onclick="toggleInfo2()">Show/Hide Additional Information</button>
+
+<div class="more-info2">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>
+        <li>Core: Likely iron and nickel, with a radius of about 3,000 km.</li>
+        <li>Mantle: Solid silicate rock, may have partially molten regions.</li>
+        <li>Crust: Thin and rocky, featuring volcanic plains and highlands.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: Covered with volcanic plains and large structures; few impact craters.</li>
+        <li>Composition: Primarily basaltic rock with signs of recent volcanic activity.</li>
+        <li>Atmosphere: Dense and cloudy, with layers containing sulfuric acid clouds.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate: Extremely hot and dry; average surface temperature about 467°C.</li>
+        <li>Weather: Thick clouds create a greenhouse effect; winds can reach 360 km/h.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Notable Missions: Venera Program, Magellan, Akatsuki.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Retrograde Rotation: Sun rises in the west and sets in the east.</li>
+        <li>Extreme Greenhouse Effect: Atmosphere rich in carbon dioxide creates intense heat.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Historical Significance: Known since ancient times; observed by civilizations like the Babylonians.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Venus</h2>
+    <ol>
+        <li>Called Earth's "sister planet" due to size and composition similarities.</li>
+        <li>Surface pressure equivalent to being 900 meters underwater on Earth.</li>
+        <li>Has more volcanoes than any other planet in the solar system.</li>
+        <li>No moons or rings, unusual for its size.</li>
+        <li>A day on Venus is longer than a year.</li>
+        <li>Temperatures hot enough to melt most metals.</li>
+        <li>Atmosphere is 96.5% carbon dioxide.</li>
+        <li>Highly reflective atmosphere; one of the brightest objects in the night sky.</li>
+        <li>Clouds contain sulfuric acid, making the atmosphere corrosive.</li>
+        <li>Less studied than Mars, but may have conditions conducive to life in the upper atmosphere.</li>
+    </ol>
+</div>
+</section>
+<section id="earth">
+    <h1>Earth Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Name: Earth</li>
+    <li>Type: Terrestrial planet</li>
+    <li>Age: 4.5 billion years</li>
+    <li>Diameter: 12,742 km</li>
+    <li>Mass: 5.9722 x 10<sup>24</sup> kg</li>
+    <li>Distance to Moon: 384,400 km</li>
+    <li>Gravity: 9.81 m/s²</li>
+    <li>Rotation Period: 1 day</li>
+    <li>Moons: 1</li>
+    <li>Atmospheric Pressure: 101.3 kPa</li>
+</ul>
+
+<button class="toggle-button3" onclick="toggleInfo3()">Show/Hide Additional Information</button>
+
+<div class="more-info3">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>
+        <li>Core: Inner core is solid iron and nickel; outer core is liquid.</li>
+        <li>Mantle: Thick layer of semi-solid silicate rock.</li>
+        <li>Crust: Thin outer layer divided into continental and oceanic crust.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: 71% water, primarily oceans; 29% continents and islands.</li>
+        <li>Composition: Major elements include oxygen, silicon, aluminum, and iron.</li>
+        <li>Atmospheric Layers: Troposphere, Stratosphere, Mesosphere, Thermosphere, Exosphere.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate Zones: Includes tropical, arid, temperate, and polar.</li>
+        <li>Weather: Influenced by temperature, humidity, wind, and pressure.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Notable Missions: Apollo program, Landsat series, Earth Observing System (EOS).</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Plate Tectonics: Movement creates earthquakes and mountain ranges.</li>
+        <li>Biodiversity: Home to millions of species and diverse ecosystems.</li>
+        <li>Water: Unique for having liquid water on its surface.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Date: Earth has always existed as the home to humanity.</li>
+        <li>Understanding: Recognized as a distinct entity over centuries.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Earth</h2>
+    <ol>
+        <li>Located in the "Goldilocks Zone" for liquid water.</li>
+        <li>The Great Barrier Reef is the largest living structure on Earth.</li>
+        <li>Earth's rotation is gradually slowing.</li>
+        <li>Water we drink has been recycled for billions of years.</li>
+        <li>Millions of earthquakes occur each year, mostly undetectable.</li>
+    </ol>
+</div>
+
+</section>
+<section id="mars">
+    <h1>Mars Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Name: Mars</li>
+    <li>Type: Terrestrial planet</li>
+    <li>Age: 4.6 billion years</li>
+    <li>Diameter: 6,779 km</li>
+    <li>Mass: 6.42 x 10<sup>23</sup> kg</li>
+    <li>Distance to Earth: Closest: 54.6 million km; Farthest: 401 million km</li>
+    <li>Gravity: 3.71 m/s²</li>
+    <li>Rotation Period: 24.6 Earth hours</li>
+    <li>Moons: 2</li>
+    <li>Atmospheric Pressure: About 0.6% of Earth's</li>
+</ul>
+
+<button class="toggle-button4" onclick="toggleInfo4()">Show/Hide Additional Information</button>
+
+<div class="more-info4">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>
+        <li>Core: Likely composed of iron, nickel, and sulfur, radius about 1,500 km.</li>
+        <li>Mantle: Mostly solid silicate rock with some partial melting evidence.</li>
+        <li>Crust: Thin and rocky, primarily basaltic with volcanic plains and impact craters.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: Features large volcanoes, deep valleys, and polar ice caps.</li>
+        <li>Composition: Mainly basalt with iron oxide giving it a red color.</li>
+        <li>Atmosphere: Thin, primarily composed of carbon dioxide, nitrogen, and argon.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate Zone: Generally cold and dry, average temperature about -63°C.</li>
+        <li>Weather: Dust storms can cover the planet; significant temperature variations.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Notable Missions: Mariner 4, Viking 1 and 2, Mars rovers (Spirit, Opportunity, Curiosity, Perseverance), Mars Reconnaissance Orbiter.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Olympus Mons: Tallest volcano in the solar system, about 22 km high.</li>
+        <li>Valles Marineris: One of the largest canyons, over 4,000 km long.</li>
+        <li>Seasonal Ice Caps: Polar ice caps grow and recede with the seasons.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Date: Known since ancient times; documented by the Babylonians around 2,000 BCE.</li>
+        <li>Notable Contributors: Observed by many ancient civilizations, including Ptolemy.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Mars</h2>
+    <ol>
+        <li>Mars has the largest dust storms in the solar system, lasting for months.</li>
+        <li>Two small moons, Phobos and Deimos, are thought to be captured asteroids.</li>
+        <li>A Martian day (sol) is just over 24 hours long.</li>
+        <li>Valles Marineris is the most extensive canyon system in the solar system.</li>
+        <li>Evidence of liquid water flowing in the past exists on Mars.</li>
+        <li>Extreme temperature fluctuations from -125°C to 20°C.</li>
+        <li>Surface gravity is about 38% of Earth’s.</li>
+        <li>Mars is often called the "Red Planet" due to its iron oxide surface.</li>
+        <li>Seasons on Mars last about twice as long as those on Earth.</li>
+        <li>Future exploration includes potential human missions to Mars.</li>
+    </ol>
+</div>
+</section>
+<section id="jupiter">
+    <h1>Jupiter Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Name: Jupiter</li>
+    <li>Type: Gas Giant</li>
+    <li>Age: 4.5 billion years</li>
+    <li>Diameter: 139,822 kilometers</li>
+    <li>Mass: 1.90 x 10<sup>27</sup> kg</li>
+    <li>Distance to Earth: 778 million kilometers</li>
+    <li>Gravity: 24.79 m/s²</li>
+    <li>Rotation Period: About 10 hours</li>
+    <li>Moons: 79</li>
+    <li>Atmospheric Pressure: 1 bar at cloud tops, increasing with depth</li>
+</ul>
+
+<button class="toggle-button5" onclick="toggleInfo5()">Show/Hide Additional Information</button>
+
+<div class="more-info5">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>
+        <li>Core: Likely a rocky and metallic core, possibly with heavier elements.</li>
+        <li>Mantle: Thick layer of metallic hydrogen, contributing to its magnetic field.</li>
+        <li>Crust: Lacks a solid crust; outer layer consists mainly of gases.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: No solid surface; composed of swirling gases and storms.</li>
+        <li>Composition: Primarily hydrogen and helium, with trace amounts of other compounds.</li>
+        <li>Layers: Atmosphere includes troposphere, stratosphere, and thermosphere.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate Zone: Exhibits complex weather patterns with different temperatures and compositions.</li>
+        <li>Weather: Known for the Great Red Spot and high-speed winds.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Notable Missions: Pioneer 10 and 11, Voyager 1 and 2, Galileo, Juno (since 2016).</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Great Red Spot: A massive storm larger than Earth.</li>
+        <li>Magnetosphere: Largest of any planet, extending millions of kilometers into space.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Date: Known since ancient times; formal observations improved in the early 1600s.</li>
+        <li>Notable Contributor: Galileo Galilei observed Jupiter's moons in 1610.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Jupiter</h2>
+    <ol>
+        <li>Shortest day of any planet, completing a rotation in about 10 hours.</li>
+        <li>Magnetic field is 20,000 times stronger than Earth's.</li>
+        <li>Immense gravity protects Earth from comet impacts.</li>
+        <li>Emits more heat than it receives from the Sun.</li>
+        <li>Ganymede, its largest moon, has its own magnetic field.</li>
+        <li>Atmosphere contains "floating" clouds of ammonia and water ice.</li>
+        <li>Faint ring system, much less prominent than Saturn's.</li>
+        <li>Experiences lightning strikes up to 1,000 times more powerful than Earth’s.</li>
+        <li>The Great Red Spot has existed for at least 350 years.</li>
+        <li>Jupiter influences the orbits of other celestial bodies in the solar system.</li>
+    </ol>
+</div>
+</section>
+<section id="saturn">
+    <h1>Saturn Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Name: Saturn</li>
+    <li>Type: Gas Giant</li>
+    <li>Age: 4.5 billion years</li>
+    <li>Diameter: 116,464 kilometers</li>
+    <li>Mass: 5.68 x 10<sup>26</sup> kg</li>
+    <li>Distance to Earth: 1.2 billion kilometers</li>
+    <li>Gravity: 10.44 m/s²</li>
+    <li>Rotation Period: 10.7 hours</li>
+    <li>Moons: 83</li>
+    <li>Atmospheric Pressure: 1 bar at cloud tops, increasing with depth</li>
+</ul>
+
+<button class="toggle-button6" onclick="toggleInfo6()">Show/Hide Additional Information</button>
+
+<div class="more-info6">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>
+        <li>Core: Likely a small, rocky core surrounded by ice and metal.</li>
+        <li>Mantle: Thick layer of metallic hydrogen, contributing to its magnetic field.</li>
+        <li>Crust: No solid crust; primarily composed of gaseous and liquid materials.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: No solid surface; consists of a thick atmosphere of gas.</li>
+        <li>Composition: Mainly hydrogen and helium, with trace amounts of methane and ammonia.</li>
+        <li>Layers: Atmosphere has several layers, including troposphere, stratosphere, and thermosphere.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate Zone: Exhibits complex weather patterns with bands of clouds and storms.</li>
+        <li>Weather: Known for its hexagonal storm at the north pole and high-speed winds.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Notable Missions: Pioneer 11, Voyager 1 and 2, and Cassini-Huygens (2004-2017).</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Rings: Famous for its extensive and bright ring system, composed of ice particles and rocky debris.</li>
+        <li>Titan: Largest moon, unique for its dense atmosphere and surface lakes of liquid methane.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Date: Known since ancient times; telescopic observations improved in the early 1600s.</li>
+        <li>Notable Contributor: Galileo Galilei observed Saturn in 1610, misidentifying its rings.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Saturn</h2>
+    <ol>
+        <li>Flattest planet in the solar system due to rapid rotation.</li>
+        <li>Rings are about 30 feet (10 meters) thick on average, spanning over 175,000 miles (282,000 kilometers).</li>
+        <li>Moon Enceladus has geysers suggesting an underground ocean.</li>
+        <li>Winds can reach speeds of up to 1,100 miles per hour (1,800 kilometers per hour).</li>
+        <li>Completes one orbit around the Sun in about 29.5 Earth years.</li>
+        <li>Weak magnetic field, about one-tenth the strength of Jupiter’s.</li>
+        <li>Moon Titan is larger than Mercury and has a dense atmosphere.</li>
+        <li>Atmosphere characterized by bands of clouds parallel to its equator.</li>
+        <li>Emits radio waves studied to learn about its magnetic field.</li>
+        <li>Rings change over time due to gravitational interactions.</li>
+    </ol>
+</div>
+</section>
+<section id="uranus">
+    <h1>Uranus Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Name: Uranus</li>
+    <li>Type: Ice Giant</li>
+    <li>Age: 4.5 billion years</li>
+    <li>Diameter: 50,724 kilometers</li>
+    <li>Mass: 8.68 x 10<sup>25</sup> kg</li>
+    <li>Distance to Earth: 2.87 billion kilometers</li>
+    <li>Gravity: 8.69 m/s²</li>
+    <li>Rotation Period: 17.24 hours</li>
+    <li>Moons: 27</li>
+    <li>Atmospheric Pressure: 1 bar at cloud tops, increasing with depth</li>
+</ul>
+
+<button class="toggle-button7" onclick="toggleInfo7()">Show/Hide Additional Information</button>
+
+<div class="more-info7">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>
+        <li>Core: Likely a rocky core surrounded by ice and water, ammonia, and methane ices.</li>
+        <li>Mantle: Composed mostly of water, ammonia, and methane in fluid form.</li>
+        <li>Crust: No solid crust; primarily composed of gases and liquids.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: No solid surface; characterized by a thick atmosphere of gas.</li>
+        <li>Composition: Mainly hydrogen and helium, with a significant amount of methane giving it a blue color.</li>
+        <li>Layers: Atmosphere includes several layers, with a cold upper atmosphere and warmer regions below.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate Zone: Exhibits a complex atmosphere with dynamic weather patterns.</li>
+        <li>Weather: Known for high-speed winds that can reach up to 560 miles per hour (900 kilometers per hour) and large storms.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Space Missions: The only spacecraft to visit Uranus is Voyager 2, which flew by in 1986.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Tilt: Uranus rotates on its side, with an axial tilt of about 98 degrees.</li>
+        <li>Ring System: Has a faint ring system composed of dark particles.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Date: Discovered on March 13, 1781.</li>
+        <li>Notable Contributor: Sir William Herschel is credited with the discovery.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Uranus</h2>
+    <ol>
+        <li>Coldest planet in the solar system, with temperatures reaching -224°C (-371°F).</li>
+        <li>High concentration of methane gives Uranus its blue color.</li>
+        <li>Most extreme axial tilt of any planet, causing 42 years of sunlight followed by 42 years of darkness at the poles.</li>
+        <li>27 known moons, many named after characters from Shakespeare and Alexander Pope.</li>
+        <li>Faint ring system consisting of 13 distinct rings composed of ice and dark material.</li>
+        <li>Rotates retrograde, spinning in the opposite direction to most planets.</li>
+        <li>Magnetic field tilted about 59 degrees from its rotational axis.</li>
+        <li>Diameter almost four times that of Earth but only 14.5 times Earth's mass, indicating lower density.</li>
+        <li>First planet discovered with a telescope, marking an advancement in astronomy.</li>
+        <li>Largely unexplored since Voyager 2, leading to hopes for future missions.</li>
+    </ol>
+</div>
+</section>
+<section id="neptune">
+    <h1>Neptune Overview</h1>
+
+<h2>General Information</h2>
+<ul>
+    <li>Name: Neptune</li>
+    <li>Type: Ice Giant</li>
+    <li>Age: 4.5 billion years</li>
+    <li>Diameter: 49,244 kilometers</li>
+    <li>Mass: 1.02 x 10<sup>26</sup> kg</li>
+    <li>Distance to Earth: 4.3 billion kilometers</li>
+    <li>Gravity: 11.15 m/s²</li>
+    <li>Rotation Period: 16.11 hours</li>
+    <li>Moons: 14</li>
+    <li>Atmospheric Pressure: 1 bar at cloud tops, increasing with depth</li>
+</ul>
+
+<button class="toggle-button8" onclick="toggleInfo8()">Show/Hide Additional Information</button>
+
+<div class="more-info8">
+    <hr>
+
+    <h2>Composition</h2>
+    <ul>    
+        <li>Core: Likely a rocky core surrounded by ices and heavy elements.</li>
+        <li>Mantle: Composed mostly of water, ammonia, and methane in a fluid state.</li>
+        <li>Crust: No solid crust; primarily consists of gases and liquids.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Surface and Atmosphere</h2>
+    <ul>
+        <li>Surface: No solid surface; characterized by a thick atmosphere of gas.</li>
+        <li>Composition: Mainly hydrogen and helium, with significant methane giving it a blue color.</li>
+        <li>Layers: The atmosphere features several layers, with a cold upper atmosphere and warmer regions below.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Climate and Weather</h2>
+    <ul>
+        <li>Climate Zone: Exhibits dynamic weather patterns with strong winds and storms.</li>
+        <li>Weather: Known for high-speed winds up to 1,500 miles per hour (2,400 kilometers per hour) and large storms, including the Great Dark Spot.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Exploration</h2>
+    <ul>
+        <li>Space Missions: The only spacecraft to visit Neptune is Voyager 2, which flew by in 1989.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Unique Features</h2>
+    <ul>
+        <li>Triton: Neptune’s largest moon, Triton, has a retrograde orbit, suggesting it may have been captured by Neptune’s gravity.</li>
+        <li>Storms: Neptune has intense storms, including the Great Dark Spot, similar to Jupiter’s Great Red Spot.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Discovery</h2>
+    <ul>
+        <li>Date: Discovered on September 23, 1846.</li>
+        <li>Notable Contributors: Johann Galle and Heinrich Louis d'Arrest, based on mathematical predictions.</li>
+    </ul>
+
+    <hr>
+
+    <h2>10 Curiosities About Neptune</h2>
+    <ol>
+        <li>Farthest planet from the Sun in our solar system.</li>
+        <li>Striking blue color due to methane in its atmosphere.</li>
+        <li>Experiences some of the fastest winds, reaching 1,500 miles per hour (2,400 kilometers per hour).</li>
+        <li>Triton is geologically active with geysers that spew nitrogen gas.</li>
+        <li>Neptune's orbit around the Sun takes about 165 Earth years to complete.</li>
+        <li>Large storms include the Great Dark Spot, which changes rapidly.</li>
+        <li>Faint ring system composed of ice particles and dust.</li>
+        <li>Magnetic field tilted about 47 degrees from its rotation axis.</li>
+        <li>Discovered through mathematical predictions, showcasing advancements in astronomy.</li>
+        <li>Emits more energy than it receives, likely from residual heat from its formation.</li>
+    </ol>
+</div>
+</section>
+<footer>
+    <p>InfotronX 2024 SPACE APP CHALLENGE </p>
+    <p>©Copyright Reserved</p>
+</footer>
+
+</body>
+</html>

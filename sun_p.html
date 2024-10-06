@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <style>
+            .table {
+                position: relative;
+                top:-950px;
+                text-align: left;
+                width: 71.6%;
+                color: #53f2e6;
+                text-decoration: none;
+                font-family: "Arial";
+                -webkit-text-stroke-color: black;
+                -webkit-text-stroke-width: 0.25px;
+            }
+            .table1{
+                position: relative;
+                top:-950px;
+                text-align: left;
+                color: #53f2e6;
+                text-decoration: none;
+                font-family: "Arial";
+                -webkit-text-stroke-color: black;
+                -webkit-text-stroke-width: 0.25px;
+            }
+            #toggleTextBtn {
+    position: absolute;
+    top: 20px;
+    right: 80px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color:#53f2e6;
+    cursor: pointer;
+    background-color: transparent; 
+    border: solid;
+}
+            
+        </style>
+        <div id="container"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+        <script src="sun.js"></script>
+    </head>
+    <body bgcolor="black">
+        <table>
+            <tr>
+                <td class="table1">Name</td>
+                <td class="table">Sun</td>
+            </tr>
+            <tr>
+                <td class="table1">Type</td>
+                <td class="table">G-type main-sequence star (G dwarf)</td>
+            </tr>
+            <tr>
+                <td class="table1">Age</td>
+                <td class="table">Approximately 4.6 billion years</td>
+            </tr>
+            <tr>
+                <td class="table1">Diameter</td>
+                <td class="table">About 1.39 million kilometers</td>
+            </tr>
+            <tr>
+                <td class="table1">Mass</td>
+                <td class="table">Approximately 1.989 × 10<sup>30</sup> kilograms</td>
+            </tr>
+            <tr>
+                <td class="table1">Distance to Earth</td>
+                <td class="table">About 150 million kilometers, or 1 Astronomical Unit (AU)</td>
+            </tr>
+            <tr>
+                <td class="table1">Gravity</td>
+                <td class="table">About 274 m/s² at the surface</td>
+            </tr>
+            <tr>
+                <td class="table1">Rotation Period</td>
+                <td class="table">Approximately 25 days at the equator, increasing to about 35 days at the poles</td>
+            </tr>
+            <tr>
+                <td class="table1">Luminosity</td>
+                <td class="table">About 3.828 × 10<sup>26</sup> watts</td>
+            </tr>
+            <tr>
+                <td class="table1">Temperature</td>
+                <td class="table">Surface: 5,500 °C; Core: 15 million °C</td>
+            </tr>
+            <tr>
+                <td class="table1">Number of Planets</td>
+                <td class="table">8</td>
+            </tr>
+            <tr>
+                <td class="table1">Atmospheric Pressure</td>
+                <td class="table">Extremely low density and pressure in the corona</td>
+            </tr>
+        </table>
+        <a href="Nasa1.html"><button id="toggleTextBtn"><h3>Hide Info</h3></button></a>
+
+        <script>
+            // Toggle the iframe visibility
+            const toggleButton = document.getElementById('toggleIframeBtn');
+            const iframeContainer = document.getElementById('iframeContainer');
+
+            toggleButton.addEventListener('click', () => {
+                if (iframeContainer.style.display === "none") {
+                    iframeContainer.style.display = "block"; // Show the iframe
+                    toggleButton.textContent = "Hide Info"; // Change button text
+                } else {
+                    iframeContainer.style.display = "none"; // Hide the iframe
+                    toggleButton.textContent = "Show Info"; // Change button text
+                 }
+            });
+        </script>
+    </body>
+</html>

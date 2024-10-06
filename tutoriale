@@ -1,0 +1,52 @@
+<html>
+
+    <butoane>
+        <button type="button">POW</button>
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    </butoane>
+
+    <imagini>
+        https://www.w3schools.com/css/css3_images.asp
+    </imagini>
+
+    <Javascript Imagini>
+        document.getElementById("image").src = "picture.gif";
+    </Javascript Imagini>
+
+    <html colors>
+        https://htmlcolorcodes.com
+    </html colors>
+
+    <html animated backgrounds>
+        https://freefrontend.com/css-animated-backgrounds/
+    </html animated backgrounds>
+
+    <links>
+        <a href="url">link text</a>
+    </links>
+
+    <font1 generator>
+        https://www.w3schools.com/css/css_font.asp
+    </font1 generator>
+
+    <javascript>
+        https://www.w3schools.com/js/default.asp
+    </javascript>
+
+    <css>
+        https://www.w3schools.com/css/default.asp
+    </css>
+
+    <html>
+        https://www.w3schools.com/html/default.asp
+    </html>
+
+</html>

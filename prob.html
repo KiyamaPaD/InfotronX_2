@@ -1,0 +1,81 @@
+<html>
+
+    <head>
+
+        <title>
+                Nasa Space App Challenge
+        </title>
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="Nasa.css" />
+        <!doctype html>
+        <html lang="en">
+
+        <style>
+            body {
+                cursor: url('C:/Users/Cristian/Nasa-Cod-main/v3.png')49 30 ,auto; /* Replace with your cursor image path */
+            }
+        </style>
+
+        <script>//cursor custom+click explozie
+            function changeCursor() {
+                document.body.style.cursor = "url('C:/Users/Cristian/Desktop/Nasa-Cod-main/exploziev2.png'), auto"; 
+            }
+            function resetCursor() {
+                document.body.style.cursor = "url('C:/Users/Cristian/Desktop/Nasa-Cod-main/v3.png'), auto"; 
+            }   document.addEventListener('mousedown', function(event) {
+                    if (event.button === 0) { // 0 is the left mouse button
+                        changeCursor();
+                    }
+            });
+    document.addEventListener('mouseup', resetCursor);
+</script>
+
+    </head>
+
+    <body>
+
+        <div id="container"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+        <script src="Nasa.js"></script>
+        <div class="Neptun"></div>
+
+        <div class="welcome-message">Welcome To Our Website!</div>
+
+        <div class="sky">
+            <div class="ufo"><img src="v4.png"></div>
+            <div class="message" id="welcome-message"><img src="HELLO.png"></div>
+        </div>
+
+        <a href="Nasa1.html">
+            <button id="toggleTextBtn">
+                <h3>SHOW INFO</h3>
+            </button>
+        </a>
+        <a href="2D.html">
+            <button id="2d">
+                <h3>2D ANIMATION</h3>
+            </button>
+        </a>
+
+        <script>
+            function changeCursor() {
+                document.body.style.cursor = "url('C:/Users/Cristian/Desktop/Nasa-Cod-main/exploziev2.png'), auto"; 
+            }
+            function resetCursor() {
+                document.body.style.cursor = "url('C:/Users/Cristian/Desktop/Nasa-Cod-main/v3.png'), auto"; 
+            }
+            document.addEventListener('mousedown', function(event) {
+                if (event.button === 0) {
+                    changeCursor();
+                }
+            });
+            document.addEventListener('mouseup', resetCursor);
+        </script>
+
+    </body>
+
+</html>

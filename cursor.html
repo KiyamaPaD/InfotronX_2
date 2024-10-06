@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orrery Web App: Explore Near-Earth Objects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background: url('space-background.jpg') no-repeat center center/cover;
+            padding: 60px;
+            text-align: center;
+            width: 100%;
+        }
+        h1 {
+            font-size: 3.5em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .cta-button {
+            background-color: #ffcc00;
+            color: #0d0d0d;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            margin-left: 20px;
+        }
+        .cta-button:hover {
+            background-color: #ffd700;
+        }
+        section {
+            padding: 40px;
+            margin: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            width: 80%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            font-size: 2.5em;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+            width: 100%;
+        }
+        #orrery-container {
+            width: 100%;
+            height: 500px;
+            background-color: #111;
+            position: relative;
+            overflow: hidden;
+        }
+        canvas {
+            background-color: #111;
+            border: 1px solid white;
+            margin-top: 10px;
+        }
+        #neo-info {
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            width: 100%;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SOLAR SYSTEM</h1>
+    <p>Explore and Visualize Near Earth Objects</p>
+    <a href="#app" class="cta-button">SEE THE SOLAR SYSTEM</a>
+</header>
+
+<section id="about">
+    <h2>About the Project</h2>
+    <p>The Orrery Web App provides an interactive visualization of near-Earth objects (NEOs), helping users understand their orbits and significance in space exploration.</p>
+</section>
+
+<section id="features">
+    <h2>Features</h2>
+    <ul>
+        <li>Real-time tracking of NEOs</li>
+        <li>2D visualization of orbits</li>
+        <li>Information pop-ups for each object</li>
+    </ul>
+</section>
+
+<section id="app">
+    <h2>
+        Interactive Orrery
+        <button id="toggleButton" class="cta-button">Start Animation</button>
+    </h2>
+    <div id="orrery-container">
+        <canvas id="canvas" width="800" height="500"></canvas>
+        <script>
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const sun = { x: canvas.width / 2, y: canvas.height / 2, radius: 30, color: 'yellow' };
+            const planets = [
+                { name: 'Mercury', distance: 70, size: 10, color: 'gray', angle: 0, speed: 0.05, info: 'Mercury este planeta cea mai apropiată de Soare și are o atmosferă foarte subțire.' },
+                { name: 'Venus', distance: 90, size: 15, color: 'orange', angle: 0, speed: 0.04, info: 'Venus este similară ca structură cu Pământul, dar are o atmosferă groasă și toxică.' },
+                { name: 'Earth', distance: 110, size: 12, color: 'blue', angle: 0, speed: 0.03, info: 'Pământul este singura planetă cunoscută că susține viața și are oceane vaste.' },
+                { name: 'Mars', distance: 130, size: 10, color: 'red', angle: 0, speed: 0.02, info: 'Marte este cunoscut ca Planeta Roșie și are cel mai mare vulcan din sistemul solar.' },
+                { name: 'Jupiter', distance: 170, size: 25, color: 'orange', angle: 0, speed: 0.01, info: 'Jupiter este cea mai mare planetă și are o Mare Pată Roșie, o furtună gigantică.' },
+                { name: 'Saturn', distance: 210, size: 20, color: 'goldenrod', angle: 0, speed: 0.008, info: 'Saturn este faimos pentru inelele sale uimitoare formate din particule de gheață și rocă.' },
+                { name: 'Uranus', distance: 250, size: 18, color: 'lightblue', angle: 0, speed: 0.007, info: 'Uranus se rotește pe o parte și are un sistem de inele slab.' },
+                { name: 'Neptune', distance: 290, size: 15, color: 'darkblue', angle: 0, speed: 0.006, info: 'Neptun este cunoscut pentru vânturile sale puternice și este cea mai îndepărtată planetă de Soare.' }
+            ];
+
+            let isAnimating = false;
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.beginPath();
+                ctx.arc(sun.x, sun.y, sun.radius, 0, Math.PI * 2);
+                ctx.fillStyle = sun.color;
+                ctx.fill();
+                ctx.closePath();
+
+                planets.forEach(planet => {
+                    planet.angle += planet.speed;
+                    const x = sun.x + planet.distance * Math.cos(planet.angle);
+                    const y = sun.y + planet.distance * Math.sin(planet.angle);
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, planet.size, 0, Math.PI * 2);
+                    ctx.fillStyle = planet.color;
+                    ctx.fill();
+                    ctx.closePath();
+
+                    canvas.addEventListener('click', (event) => {
+                        const mouseX = event.offsetX;
+                        const mouseY = event.offsetY;
+                        const dist = Math.sqrt((mouseX - x) ** 2 + (mouseY - y) ** 2);
+                        if (dist < planet.size) {
+                            document.getElementById('neo-info').innerText = planet.info;
+                        }
+                    });
+                });
+            }
+
+            function animate() {
+                if (isAnimating) {
+                    draw();
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            document.getElementById('toggleButton').addEventListener('click', function() {
+                isAnimating = !isAnimating;
+                this.textContent = isAnimating ? 'Stop Animation' : 'Start Animation';
+                if (isAnimating) {
+                    animate();
+                }
+            });
+        </script>
+        <script>
+            function changeCursor() {
+                document.body.style.cursor = "url('C:/Users/Cristian/Desktop/Nasa-Cod-main/exploziev2.png'), auto"; 
+            }
+            function resetCursor() {
+                document.body.style.cursor = "url('C:/Users/Cristian/Desktop/Nasa-Cod-main/v3.png'), auto"; 
+            }
+            document.addEventListener('mousedown', function(event) {
+                if (event.button === 0) {
+                    changeCursor();
+                }
+            });
+            document.addEventListener('mouseup', resetCursor);
+        </script>
+    </div>
+    <div id="neo-info"></div>
+</section>
+
+<footer>
+    <p>InfotronX 2024 SPACE APP CHALLENGE</p>
+</footer>
+
+</body>
+</html>
